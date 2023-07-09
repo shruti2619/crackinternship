@@ -1,0 +1,75 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+    
+    // brute force TC-> O(n^2) SC-> O(1)
+    //here we are checking every integer from [0,n], the integer which is not present is reurned
+    /* int n= nums.size();
+        int flag=0;
+        for(int i=0;i<=n;i++){
+            flag=0;
+            for(int j=0;j<n;j++){
+                if(nums[j]==i){
+                    flag=1;
+                    break;
+                }
+            }
+            if(!flag){
+                return i;
+            }
+        }
+        return 0;
+    }
+    */
+
+    // better solution TC-> O(n) SC-> O(n)
+    // here we are maintaining a hashmap and if the value is present then it is marked as 1 in hashmap 
+    // later we check in hashmap if the value is 0 then that element is absent so it is returned
+    /*
+        int n= nums.size();
+        vector<int>arr(n+1,0);
+        for(int i=0; i<n;i++){
+            arr[nums[i]]=1;
+        }
+        for(int i=0;i<n+1;i++){
+            if(arr[i]==0)
+                return i;
+        }
+        return 0;
+    }
+    */
+
+
+    // optimised TC->O(n) SC->O(1)
+    //here we are checking calculating total of integers from [0,n] --->x
+    // calculating sum of the all the elements of the array  ----->y
+    // subtracting x-y=missing number
+        /*
+           int n= nums.size();
+          long long total= (n*(n+1))/2;
+            long long sum=0;
+            for(int i=0; i<n;i++){
+            sum+=nums[i];
+         }
+            return (int)(total-sum);
+        */
+        
+
+
+        //most optimized TC->O(n SC->O(1)
+        // we will xor the elements of the array with all the lements from [0,n]
+        // since,a^a=0
+        //for example input= [3,0,1]
+        //xor-> 3^0^1 ^ 0^1^2^3 ---> clearly only 2 will left out
+        // it is better as xor of elemets will not exceed size of array unlike in case of sum
+        // therefore better approach
+            int n= nums.size();
+            int xor1=0,ans;
+            for(int i=0;i<n;i++){
+                ans=nums[i]^i;
+                xor1=xor1^ans;
+            }
+            return xor1^n;
+
+    }
+};
